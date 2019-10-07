@@ -1,38 +1,34 @@
 import os
 from pathlib import Path
 from jinja2 import Template
+import argparse
+from command import generate
 
 def main():
-    print(os.path.abspath(__file__))
+    # print(os.path.abspath(__file__))
 
-    # project_folder = Path("../spring-project")
-    # print(project_folder)
+    parser = argparse.ArgumentParser(add_help=False)
+    subparsers = parser.add_subparsers(help="commands", dest="command")
 
-    project_folder = os.path.join(".", "spring-project")
-    print("project folder: {}".format(project_folder))
+    # Generate command
+    generate_parser = subparsers.add_parser("generate", help="Generate Spring classes", add_help=False)
 
-    files = [f for f in os.listdir(project_folder)]
-    for f in files:
-        print(f.title())
+    args = parser.parse_args()
 
-    package_folder = os.path.join(project_folder, "src", "main", "java", "com", "spring")
+    if args.command == "generate":
+        generate.execute()
+    #project_folder = os.path.join(".", "spring-project")
+    #print("project folder: {}".format(project_folder))
+
+    #files = [f for f in os.listdir(project_folder)]
+    #for f in files:
+    #    print(f.title())
+
+    #package_folder = os.path.join(project_folder, "src", "main", "java", "com", "spring")
 
     # we need to get name from somewhere
-    with open(os.path.join(package_folder, "TestController.java"), "w") as out:
-        out.write(create_controller())
-
-def create_controller():
-    package_name = "my.package.name"
-    controller_name = "MyTestController"
-    root_path = "/" + controller_name.replace("Controller", "").lower()
-
-
-    rendered = ""
-    with open(os.path.join(".", "templates", "controller.java.jinja2"), "r") as input:
-        tm = Template(input.read())
-
-        rendered = tm.render(package_name = package_name, controller_name = controller_name, root_path = root_path)
-    return rendered
+    #with open(os.path.join(package_folder, "TestController.java"), "w") as out:
+    #    out.write(create_controller())
 
 if __name__ == "__main__":
     main()

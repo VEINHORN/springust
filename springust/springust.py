@@ -1,11 +1,15 @@
+#!/usr/bin/env python3
+
 import os
 from pathlib import Path
 from jinja2 import Template
 import argparse
 from command import generate
+import sys
 
 def main():
     # print(os.path.abspath(__file__))
+    print(sys.version)
 
     parser = argparse.ArgumentParser(add_help=False)
     subparsers = parser.add_subparsers(help="commands", dest="command")

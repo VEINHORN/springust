@@ -16,23 +16,22 @@ def main():
 
     # Generate command
     generate_parser = subparsers.add_parser("generate", help="Generate Spring classes", add_help=False)
+    generate_subparsers = generate_parser.add_subparsers(help="type of gen file", dest="gen_type")
+
+    gc_parser = generate_subparsers.add_parser("controller")
+    gs_parser = generate_subparsers.add_parser("service")
+    gr_parser = generate_subparsers.add_parser("repository")
+    
 
     args = parser.parse_args()
 
+
     if args.command == "generate":
-        generate.execute()
-    #project_folder = os.path.join(".", "spring-project")
-    #print("project folder: {}".format(project_folder))
-
-    #files = [f for f in os.listdir(project_folder)]
-    #for f in files:
-    #    print(f.title())
-
-    #package_folder = os.path.join(project_folder, "src", "main", "java", "com", "spring")
-
-    # we need to get name from somewhere
-    #with open(os.path.join(package_folder, "TestController.java"), "w") as out:
-    #    out.write(create_controller())
+        # print("gen type = " + args.gen_type)
+        if args.gen_type:
+            generate.execute(args.gen_type)
+        else:
+            print("You need to specify what you want to generate...")
 
 if __name__ == "__main__":
     main()

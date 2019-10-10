@@ -26,8 +26,5 @@ def create_controller(class_type, package, controller_name):
         rendered = tm.render(package_name = package, controller_name = controller_name, root_path = create_controller_root_path("MyTestController"))
     return rendered
 
-def create_controller_name():
-    return "MyTestController"
-
 def create_controller_root_path(controller_name):
     return "/" + controller_name.replace("Controller", "").lower()

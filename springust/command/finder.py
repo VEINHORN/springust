@@ -18,8 +18,10 @@ def find_package(project_root, class_type):
                 return package_path, package_name(source_path, package_path)
         
         for file in files:
-            if "Controller" in file:
-                print(root)
+            if "Controller" in str(file):
+                package_path = root;
+                print("Trying to search file: " + package_path)
+                return package_path, package_name(source_path, package_path)
 
     return "unknown package"
 

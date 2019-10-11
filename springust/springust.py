@@ -8,28 +8,26 @@ from command import generate
 import sys
 
 def main():
-    # print(os.path.abspath(__file__))
-    print(sys.version)
-
-    parser = argparse.ArgumentParser(add_help=False)
+    parser = argparse.ArgumentParser(add_help=True)
     subparsers = parser.add_subparsers(help="commands", dest="command")
 
     # Generate command
-    generate_parser = subparsers.add_parser("generate", help="Generate Spring classes", add_help=False)
+    generate_parser = subparsers.add_parser("generate", help="Generate Spring classes", add_help=True)
     generate_subparsers = generate_parser.add_subparsers(help="type of gen file", dest="gen_type")
 
+    # -----
     gc_parser = generate_subparsers.add_parser("controller")
+    gc_parser.add_argument("controller_name")
+
+    # -----
     gs_parser = generate_subparsers.add_parser("service")
     gr_parser = generate_subparsers.add_parser("repository")
     
-
     args = parser.parse_args()
 
-
     if args.command == "generate":
-        # print("gen type = " + args.gen_type)
         if args.gen_type:
-            generate.execute(args.gen_type)
+            generate.execute(args.gen_type, args.controller_name)
         else:
             print("You need to specify what you want to generate...")
 

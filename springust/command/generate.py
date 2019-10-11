@@ -2,16 +2,15 @@ import os
 from jinja2 import Template
 from command.finder import find_package
 
-def execute(class_type):
+def execute(class_type, class_name):
     if class_type == "controller":
         # We need to get current dir or provide through arguments
         project_folder = os.path.join(".", "spring-project")
         
-        # package_folder = os.path.join(project_folder, "src", "main", "java", "com", "spring")
         package_path, package = find_package("spring-project", class_type)
 
-        with open(os.path.join(package_path, "TestController.java"), "w") as out:
-            out.write(create_controller(class_type, package, "MyTestController"))
+        with open(os.path.join(package_path, class_name + ".java"), "w") as out:
+            out.write(create_controller(class_type, package, class_name))
     elif class_type == "service":
         print("not implemented for now")
     else:

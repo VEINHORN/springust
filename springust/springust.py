@@ -11,7 +11,10 @@ from command import service_config as sc
 from command.service_generator import *
 
 def main():
+    # print("current dir: " + os.getcwd())
+
     parser = argparse.ArgumentParser(add_help=True)
+    parser.add_argument("-tf", "--templates", help = "Absolute path to the templates folder")
     subparsers = parser.add_subparsers(help="commands", dest="command")
 
     # Generate command
@@ -30,8 +33,10 @@ def main():
 
     # ----- Service
     service_parser = generate_subparsers.add_parser("service")
-    service_parser.add_argument("-c", "--create", action = "store_true", help = "Generate create REST method")
-    service_parser.add_argument("-r", "--read", action = "store_true", help = "Generate save REST method")
+    service_parser.add_argument("-c", "--create", action = "store_true", help = "Generate create REST method in service")
+    service_parser.add_argument("-r", "--read", action = "store_true", help = "Generate read REST method in service")
+    service_parser.add_argument("-u", "--update", action = "store_true", help = "Generate update REST method in service")
+    service_parser.add_argument("-d", "--delete", action = "store_true", help = "Generate delete REST method in service")
 
     service_parser.add_argument("service_name")
 
@@ -53,28 +58,29 @@ def main():
             
             generate.execute(args.gen_type, args.controller_name, options)
         elif args.gen_type == "service":
-            service_config = sc.ServiceCongig(args.create)
-            # service_config.has_create = args.create # check that property exists
+            service_config = sc.ServiceCongig()
             
+            # Specifying path to the templates folder
+            if args.templates:
+                service_config.templates_folder = args.templates
+
+            if args.create:
+                service_config.has_create = args.create # check that property exists
+            
+            if args.read:
+                service_config.has_read = args.read
+            
+            if args.update:
+                service_config.has_update = args.update
+            
+            if args.delete:
+                service_config.has_delete = args.delete
+
             generator = ServiceGenerator(service_config)
-            print(args.service_name)
+
             generator.generate(args.service_name)
-            # generate.execute(args.gen_type, args.controller_name, options)
         else:
             print("You need to specify what you want to generate...")
-        # print(args.gen_type)
-
-
-
-        #if args.gen_type:
-        #    if hasattr(args, "crud") and args.crud:
-        #        options = co.ControllerOption(True, True, True, True)
-        #    else:
-        #        options = co.ControllerOption(has_get = args.get, has_post = args.post, has_put = args.put, has_delete= args.delete)
-        #
-        #    generate.execute(args.gen_type, args.controller_name, options)
-        #else:
-        #    print("You need to specify what you want to generate...")
 
 if __name__ == "__main__":
     main()

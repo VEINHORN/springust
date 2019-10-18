@@ -9,6 +9,7 @@ def find_package(project_root, class_type):
     2. Try to find any Java classes whichs ends on Controller/Service/Repository
     """
     source_path = source_folder(project_root)
+    print(source_path)
     
     for root, dirs, files in os.walk(source_path):        
         for dir in dirs:

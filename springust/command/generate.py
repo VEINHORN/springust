@@ -3,7 +3,8 @@ from jinja2 import Template
 from command.finder import find_package
 
 def execute(class_type, class_name, options):
-    project_path = "spring-project"
+    # project_path = "spring-project"
+    project_path = "."
 
     if class_type == "controller":
         if "Controller" not in class_name:

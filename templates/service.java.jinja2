@@ -3,6 +3,34 @@ package {{ package_name }};
 import org.springframework.stereotype.Service;
 
 @Service
-public class {{ controller_name }} {
+public class {{ service_name }} {
+{% if config.has_read %}
+    public some_type list() {
 
+    }
+{% endif -%}
+
+{% if config.has_read %}
+    public some_type get(Integer id) {
+        return some_type;
+    }
+{% endif %}
+
+{% if config.has_create %}
+    public some_type create(some_type value) {
+        return some_type;
+    }
+{% endif -%}
+
+{% if config.has_update %}
+    public some_type update(some_type value) {
+        return some_type;
+    }
+{% endif %}
+
+{% if config.has_delete %}
+    public some_type delete(Integer id) {
+        return some_type;
+    }
+{% endif %}
 }

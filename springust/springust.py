@@ -4,13 +4,13 @@ import os
 from pathlib import Path
 from jinja2 import Template
 import argparse
-from command import generate
 import sys
-from command import controller_option as co
 from command import service_config as sc
 from command import controller_config as cc
+from command import repository_config as rc
 from command.service_generator import *
 from command.controller_generator import *
+from command.repository_generator import *
 
 def main():
     # print("current dir: " + os.getcwd())
@@ -45,6 +45,7 @@ def main():
 
     # ----- Repository
     gr_parser = generate_subparsers.add_parser("repository")
+    gr_parser.add_argument("repository_name")
     
     args = parser.parse_args()
 
@@ -91,6 +92,16 @@ def main():
 
             generator = ServiceGenerator(service_config)
             generator.generate(args.service_name)
+        elif args.gen_type == "repository":
+            repository_config = rc.RepositoryConfig()
+
+            # Specifying path to the templates folder
+            if args.templates:
+                repository_config.templates_folder = args.templates
+
+            generator = RepositoryGenerator(repository_config)
+            generator.generate(args.repository_name)
+
         else:
             print("You need to specify what you want to generate...")
 

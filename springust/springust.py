@@ -27,7 +27,7 @@ def main():
     controller_parser.add_argument("-p", "--post", action = "store_true", help = "Generate POST method in controller")
     controller_parser.add_argument("--put", action="store_true", help = "Generate PUT method in controller")
     controller_parser.add_argument("-d", "--delete", action="store_true", help = "Generate DELETE method in controller")
-    controller_parser.add_argument("--crud", action="store_true", help = "Generates all CRUD methods in controller")
+    controller_parser.add_argument("--crud", action="store_true", help = "Generates GET/POST/PUT/DELETE methods in controller")
 
     controller_parser.add_argument("controller_name")
 
@@ -37,6 +37,7 @@ def main():
     service_parser.add_argument("-r", "--read", action = "store_true", help = "Generate read REST method in service")
     service_parser.add_argument("-u", "--update", action = "store_true", help = "Generate update REST method in service")
     service_parser.add_argument("-d", "--delete", action = "store_true", help = "Generate delete REST method in service")
+    service_parser.add_argument("--crud", action = "store_true", help = "Generates all CRUD methods in service")
 
     service_parser.add_argument("service_name")
 
@@ -64,20 +65,24 @@ def main():
             if args.templates:
                 service_config.templates_folder = args.templates
 
-            if args.create:
-                service_config.has_create = args.create # check that property exists
-            
-            if args.read:
-                service_config.has_read = args.read
-            
-            if args.update:
-                service_config.has_update = args.update
-            
-            if args.delete:
-                service_config.has_delete = args.delete
+            if args.crud:
+                service_config.has_create = True
+                service_config.has_read = True
+                service_config.has_update = True
+                service_config.has_delete = True
+            else:
+                if args.create:
+                    service_config.has_create = args.create # check that property exists
+                if args.read:
+                    service_config.has_read = args.read
+                
+                if args.update:
+                    service_config.has_update = args.update
+                
+                if args.delete:
+                    service_config.has_delete = args.delete
 
             generator = ServiceGenerator(service_config)
-
             generator.generate(args.service_name)
         else:
             print("You need to specify what you want to generate...")

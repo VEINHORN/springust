@@ -4,38 +4,38 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController("{{ root_path }}")
 public class {{ controller_name }} {
-    {% if options.has_get -%}
-        @GetMapping
-        public some_type list() {
-            return some_type;
-        }
-    {% endif -%}
-    
-    {% if options.has_get -%}
-        @GetMapping("/{id}")
-        public some_type get(Integer id) {
-            return some_type;
-        }
-    {% endif -%}
+{% if options.has_get %}
+    @GetMapping
+    public some_type list() {
+        return some_type;
+    }
+{% endif -%}
 
-    {% if options.has_post -%}
-        @PostMapping
-        public some_type save() {
-            return some_type;
-        }
-    {% endif -%}
+{% if options.has_get %}
+    @GetMapping("/{id}")
+    public some_type get(Integer id) {
+        return some_type;
+    }
+{% endif -%}
 
-    {% if options.has_put -%}
-        @PutMapping("/{id}")
-        public some_type update(Integer id) {
-            return some_type;
-        }
-    {% endif -%}
+{% if options.has_post %}
+    @PostMapping
+    public some_type save() {
+        return some_type;
+    }
+{% endif -%}
 
-    {% if options.has_delete -%}
-        @DeleteMapping("/{id}")
-        public some_type delete(Integer id) {
-            return some_type;
-        }
-    {% endif -%}
+{% if options.has_put %}
+    @PutMapping("/{id}")
+    public some_type update(Integer id) {
+        return some_type;
+    }
+{% endif -%}
+
+{% if options.has_delete %}
+    @DeleteMapping("/{id}")
+    public some_type delete(Integer id) {
+        return some_type;
+    }
+{% endif -%}
 }

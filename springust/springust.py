@@ -8,7 +8,9 @@ from command import generate
 import sys
 from command import controller_option as co
 from command import service_config as sc
+from command import controller_config as cc
 from command.service_generator import *
+from command.controller_generator import *
 
 def main():
     # print("current dir: " + os.getcwd())
@@ -50,14 +52,19 @@ def main():
         generator = None
 
         if args.gen_type == "controller":
-            options = None
+            controller_config = cc.ControllerConfig()
             
-            if hasattr(args, "crud") and args.crud:
-                options = co.ControllerOption(True, True, True, True)
-            else: # trying to set separate get/post/put/delete options
-                options = co.ControllerOption()
+            if args.templates:
+                controller_config.templates_folder = args.templates
+
+            if args.crud:
+                controller_config.has_get = True
+                controller_config.has_post = True
+                controller_config.has_put = True
+                controller_config.has_delete = True
             
-            generate.execute(args.gen_type, args.controller_name, options)
+            generator = ControllerGenerator(controller_config)
+            generator.generate(args.controller_name)
         elif args.gen_type == "service":
             service_config = sc.ServiceCongig()
             

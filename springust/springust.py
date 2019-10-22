@@ -8,9 +8,11 @@ import sys
 from command import service_config as sc
 from command import controller_config as cc
 from command import repository_config as rc
+from command import entity_config as ec
 from command.service_generator import *
 from command.controller_generator import *
 from command.repository_generator import *
+from command.entity_generator import EntityGenerator
 from command.finder import *
 
 def main():
@@ -48,6 +50,9 @@ def main():
     gr_parser = generate_subparsers.add_parser("repository")
     gr_parser.add_argument("-ie", "--include-entity", help = "Generates entity alongside with repository and inserts it")
     gr_parser.add_argument("repository_name")
+
+    eg_parser = generate_subparsers.add_parser("entity")
+    eg_parser.add_argument("entity_name")
 
     # ----- Test
     test_parser = generate_subparsers.add_parser("test")
@@ -109,6 +114,16 @@ def main():
 
             generator = RepositoryGenerator(repository_config)
             generator.generate(args.repository_name)
+        elif args.gen_type == "entity":
+            entity_config = ec.EntityConfig()
+
+            # Specifying path to the templates folder
+            if args.templates:
+                entity_config.templates_folder = args.templates
+
+            generator = EntityGenerator(entity_config)
+            generator.generate(args.entity_name)
+
         elif args.gen_type == "test":
             package_name, entity_name = find_entity("User")
             

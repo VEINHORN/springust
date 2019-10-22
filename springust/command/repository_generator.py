@@ -10,7 +10,7 @@ class RepositoryGenerator(ClassGenerator):
     def generate(self, class_name):
         project_path = "."
 
-        class_name = self.enrich_class_name(class_name)
+        class_name = self.enrich_class_name(class_name, "Repository")
 
         package_path, package = find_package_new(project_path, class_name, "repository")
 
@@ -30,5 +30,5 @@ class RepositoryGenerator(ClassGenerator):
             rendered = tm.render(package_name = package, repository_name = repository_name, entity_package_name = entity_package_name, entity_name = entity_name)
         return rendered
 
-    def enrich_class_name(self, class_name):
-        return "{}{}".format(class_name.capitalize(), "Repository") if "Repository" not in class_name else class_name
+    #def enrich_class_name(self, class_name):
+    #    return "{}{}".format(class_name.capitalize(), "Repository") if "Repository" not in class_name else class_name

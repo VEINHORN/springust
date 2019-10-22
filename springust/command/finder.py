@@ -26,6 +26,7 @@ def find_package(project_root, class_type):
 
     return "unknown package"
 
+# Create more meaningfull name for this method
 def find_package_new(project_root, class_type, what_search):
     """Package search algorithm
 
@@ -40,13 +41,13 @@ def find_package_new(project_root, class_type, what_search):
         for dir in dirs:
             if what_search in dir:
                 package_path = root + os.sep + dir
-                print("found package with path: " + package_path)
+                # print("found package with path: " + package_path)
                 return package_path, package_name(source_path, package_path)
         
         for file in files:
             if what_search.capitalize() in str(file):
                 package_path = root
-                print("Trying to search file: " + package_path)
+                # print("Trying to search file: " + package_path)
                 return package_path, package_name(source_path, package_path)
 
     return "unknown package"

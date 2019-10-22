@@ -14,6 +14,8 @@ class EntityGenerator(ClassGenerator):
 
         with open(self.class_filename(package_path, class_name), "w") as out:
             out.write(self.render(package, class_name, self.config))
+        
+        return package, class_name
 
     def render(self, package, entity_name, entity_config):
         rendered = ""

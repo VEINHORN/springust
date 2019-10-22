@@ -48,7 +48,7 @@ def main():
 
     # ----- Repository
     gr_parser = generate_subparsers.add_parser("repository")
-    gr_parser.add_argument("-ie", "--include-entity", help = "Generates entity alongside with repository and inserts it")
+    gr_parser.add_argument("-ie", "--include-entity", action = "store_true", help = "Generates entity alongside with repository and inserts it")
     gr_parser.add_argument("repository_name")
 
     eg_parser = generate_subparsers.add_parser("entity")

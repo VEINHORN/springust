@@ -1,5 +1,10 @@
 package {{ package_name }};
 
-public interface {{ repository_name }} {
+{% if entity_package_name and entity_name %}
+import {{ entity_package_name }}.{{ entity_name }};
+{% endif -%}
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface {{ repository_name }} extends JpaRepository<{{ entity_name }}, Integer> {
 
 }

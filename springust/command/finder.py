@@ -51,6 +51,20 @@ def find_package_new(project_root, class_type, what_search):
 
     return "unknown package"
 
+def find_entity(what_search):
+    """Searches first entity in the project
+    """
+    source_path = os.path.join(".", "src", "main", "java")
+
+    for root, dirs, files in os.walk(source_path):
+
+        for file in files:
+            if what_search.capitalize() + ".java" == str(file):
+                package_path = root
+                entity_name = str(file).replace(".java", "")
+                return package_name(source_path, package_path), entity_name
+    return None, None
+
 def package_name(source_path, package_path):
     return package_path.replace(source_path + os.sep, "").replace(os.sep, ".")
 

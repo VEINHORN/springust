@@ -11,6 +11,7 @@ from command import repository_config as rc
 from command.service_generator import *
 from command.controller_generator import *
 from command.repository_generator import *
+from command.finder import *
 
 def main():
     # print("current dir: " + os.getcwd())
@@ -45,7 +46,11 @@ def main():
 
     # ----- Repository
     gr_parser = generate_subparsers.add_parser("repository")
+    gr_parser.add_argument("-ie", "--include-entity", help = "Generates entity alongside with repository and inserts it")
     gr_parser.add_argument("repository_name")
+
+    # ----- Test
+    test_parser = generate_subparsers.add_parser("test")
     
     args = parser.parse_args()
 
@@ -99,9 +104,15 @@ def main():
             if args.templates:
                 repository_config.templates_folder = args.templates
 
+            if args.include_entity:
+                repository_config.include_entity = args.include_entity
+
             generator = RepositoryGenerator(repository_config)
             generator.generate(args.repository_name)
-
+        elif args.gen_type == "test":
+            package_name, entity_name = find_entity("User")
+            
+            print(package_name + "," + entity_name)
         else:
             print("You need to specify what you want to generate...")
 

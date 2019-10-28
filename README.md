@@ -1,6 +1,16 @@
 # springust
 
-Command line tool which simplifies day-to-day work with Spring
+Command line tool which simplifies day-to-day work with Spring.
+
+## Installation
+
+### Fish
+
+Add alias to your **fish** shell:
+
+```fish
+alias sg='~/github/springust/scripts/springust.sh'
+```
 
 ## Commands
 
